@@ -108,41 +108,34 @@
     <a-sky color="#000044"></a-sky>
   </a-scene>
   <script>
-    AFRAME.registerComponent("circular-motion", {
-      schema: {
-        radius: { type: "number", default: 15 }, // Rayon du cercle autour de l'île
-        speed: { type: "number", default: 20000 }, // Ralentir la vitesse du train
-        amplitude: { type: "number", default: 2 }, // Amplitude des montées et descentes
-        frequency: { type: "number", default: 2 }, // Fréquence des montées (plus grand = plus rapide)
-      },
+    AFRAME.registerComponent('circular-motion', {
+  schema: {
+    radius: { type: 'number', default: 15 },
+    speed: { type: 'number', default: 20000 },
+    amplitude: { type: 'number', default: 2 },
+    frequency: { type: 'number', default: 2 }
+  },
 
-      init: function () {
-        this.angle = 0; // Angle initial
-        this.initialY = 16.5; // Position initiale du train en hauteur
-      },
+  init: function () {
+    this.angle = 0;
+    this.initialY = 16.5;
+  },
 
-      tick: function (time, deltaTime) {
-        const elapsed = time % this.data.speed; 
-        const angle = (elapsed / this.data.speed) * 2 * Math.PI; 
-        const x = this.data.radius * Math.cos(angle); 
-        const z = this.data.radius * Math.sin(angle); 
+  tick: function (time, deltaTime) {
+    const elapsed = time % this.data.speed;
+    const angle = (elapsed / this.data.speed) * 2 * Math.PI;
+    const x = this.data.radius * Math.cos(angle);
+    const z = this.data.radius * Math.sin(angle);
 
-      
-        const rotationY = (-angle * 180) / Math.PI + 90; 
+    const rotationY = (-angle * 180) / Math.PI + 90;
+    const y = Math.max(this.initialY, this.initialY + this.data.amplitude * Math.sin(this.data.frequency * angle));
+    
+    const adjustedRotationY = rotationY + 180 + (this.data.amplitude * Math.sin(this.data.frequency * angle)); 
 
-        const y = Math.max(
-          this.initialY,
-          this.initialY +
-            this.data.amplitude * Math.sin(this.data.frequency * angle)
-        ); 
+    this.el.setAttribute('position', { x, y, z });
+    this.el.setAttribute('rotation', { x: 0, y: adjustedRotationY, z: 0 });
+  }
+});
 
-     
-        const adjustedRotationY = rotationY + 180; 
-
-       
-        this.el.setAttribute("position", { x, y, z });
-        this.el.setAttribute("rotation", { x: 0, y: adjustedRotationY, z: 0 });
-      },
-    });
   </script>
 </body>
