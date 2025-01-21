@@ -8,13 +8,12 @@
 </head>
 <body>
   <a-scene>
-
     <a-assets>
       <a-asset-item id="island" src="./img/Ile.glb"></a-asset-item>
       <a-asset-item id="Black" src="./img/BH.glb"></a-asset-item>
       <a-asset-item id="Spaceship" src="./img/Spaceship.glb"></a-asset-item>
-
-      <audio id="audio" src="./img/audio/Song.mp3" autoplay loop></audio>
+      <a-asset-item id="Train" src="./img/ground/Train.glb"></a-asset-item>
+      <audio id="audio" src="./img/audio/Theme.mp3" autoplay loop></audio>
     </a-assets>
 
     <!-- Lumières -->
@@ -26,14 +25,13 @@
       position="0 10 5"
     ></a-light>
 
-    <!-- Boite musique -->
-
-    <a-box 
-  position="0 17 -3" 
-  color="#FFFF00" 
-  audioanalyser="src: #song; property: scale.x; multiplier: 2" 
-  scale="1 1 1">
-</a-box>
+    <!-- Train -->
+    <a-entity
+      gltf-model="#Train"
+      scale="1.5 1.5 1.5"
+      circular-motion="radius: 10; speed: 10000"
+    >
+    </a-entity>
 
     <!-- Trou noir -->
     <a-entity
@@ -42,8 +40,7 @@
       position="5 30 50"
       rotation="0 90 0"
       animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
-    >
-    </a-entity>
+    ></a-entity>
 
     <!-- Vaisseaux spatiaux -->
     <a-entity
@@ -51,46 +48,41 @@
       scale="0.8 0.8 0.8"
       position="-10 35 -20"
       animation="property: position; dir: alternate; dur: 4000; loop: true; to: -10 37 -20"
-    >
-    </a-entity>
+    ></a-entity>
 
     <a-entity
       gltf-model="#Spaceship"
       scale="0.8 0.8 0.8"
       position="15 40 10"
       animation="property: position; dir: alternate; dur: 4500; loop: true; to: 15 42 10"
-    >
-    </a-entity>
+    ></a-entity>
 
     <a-entity
       gltf-model="#Spaceship"
       scale="0.8 0.8 0.8"
       position="20 45 -15"
       animation="property: position; dir: alternate; dur: 5000; loop: true; to: 20 47 -15"
-    >
-    </a-entity>
+    ></a-entity>
 
     <a-entity
       gltf-model="#Spaceship"
       scale="0.8 0.8 0.8"
       position="-25 50 20"
       animation="property: position; dir: alternate; dur: 5500; loop: true; to: -25 52 20"
-    >
-    </a-entity>
+    ></a-entity>
 
     <a-entity
       gltf-model="#Spaceship"
       scale="0.8 0.8 0.8"
       position="30 55 -25"
       animation="property: position; dir: alternate; dur: 6000; loop: true; to: 30 57 -25"
-    >
-    </a-entity>
+    ></a-entity>
 
     <!-- Sol -->
     <a-entity gltf-model="#island" scale="10 10 10" position="0 9 0"></a-entity>
 
     <!-- Caméra -->
-    <a-entity id="rig" movement-controls position="0 16 0">
+    <a-entity id="rig" movement-controls position="0 15.5 0">
       <a-entity
         camera
         position="0 1.6 0"
@@ -115,4 +107,42 @@
     ></a-entity>
     <a-sky color="#000044"></a-sky>
   </a-scene>
+  <script>
+    AFRAME.registerComponent("circular-motion", {
+      schema: {
+        radius: { type: "number", default: 15 }, // Rayon du cercle autour de l'île
+        speed: { type: "number", default: 20000 }, // Ralentir la vitesse du train
+        amplitude: { type: "number", default: 2 }, // Amplitude des montées et descentes
+        frequency: { type: "number", default: 2 }, // Fréquence des montées (plus grand = plus rapide)
+      },
+
+      init: function () {
+        this.angle = 0; // Angle initial
+        this.initialY = 16.5; // Position initiale du train en hauteur
+      },
+
+      tick: function (time, deltaTime) {
+        const elapsed = time % this.data.speed; 
+        const angle = (elapsed / this.data.speed) * 2 * Math.PI; 
+        const x = this.data.radius * Math.cos(angle); 
+        const z = this.data.radius * Math.sin(angle); 
+
+      
+        const rotationY = (-angle * 180) / Math.PI + 90; 
+
+        const y = Math.max(
+          this.initialY,
+          this.initialY +
+            this.data.amplitude * Math.sin(this.data.frequency * angle)
+        ); 
+
+     
+        const adjustedRotationY = rotationY + 180; 
+
+       
+        this.el.setAttribute("position", { x, y, z });
+        this.el.setAttribute("rotation", { x: 0, y: adjustedRotationY, z: 0 });
+      },
+    });
+  </script>
 </body>
