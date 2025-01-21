@@ -1,0 +1,35 @@
+<head>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+  </head>
+  <body>
+    <a-scene fog="type: exponential; color: #f5efe6; density: 0.05">
+  
+      <a-assets>
+        <a-asset-item id="ground" src="./elements/ground.glb"></a-asset-item>
+      </a-assets>
+  
+      <!-- Lumières -->
+      <a-light type="ambient" color="#f4e1a1" intensity="0.6"></a-light>
+      <a-light type="directional" color="#f9d06d" intensity="0.3" position="0 10 5"></a-light>
+  
+      <!-- Sol -->
+      <a-entity gltf-model="#ground" scale="0.5 1.5 0.5" position="0 -0.5 0"></a-entity>
+  
+      <!-- Caméra -->
+      <a-entity id="rig" position="3 1 9" rotation="0 50 0">
+        <a-entity camera look-controls wasd-controls position="5 1.6 0" rotation="0 -90 0">
+          <a-cursor raycaster="objects: .clickable; far: 10; showLine: true"></a-cursor>
+        </a-entity>
+        <a-entity laser-controls="hand: left" raycaster="objects: .clickable; far: 20; showLine: true"></a-entity>
+        <a-entity laser-controls="hand: right" raycaster="objects: .clickable; far: 20; showLine: true"></a-entity>
+      </a-entity>
+  
+      <!-- Environnement -->
+      <a-entity environment="preset: osiris; dressingAmount: 500"></a-entity>
+  
+    </a-scene>
+  </body>
