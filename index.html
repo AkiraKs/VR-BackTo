@@ -18,18 +18,14 @@
         <a-asset-item id="Table" src="./img/Sky/Table.glb"></a-asset-item>
         <a-asset-item id="Window" src="./img/Sky/Window.glb"></a-asset-item>
         <a-asset-item id="HoverBoard" src="./img/Character/HoverBoard.glb"></a-asset-item>
+        <a-asset-item id="Diorama" src="./img/ground/Diorama.glb"></a-asset-item>
   
         <audio id="audio" src="./img/audio/Theme.mp3" preload="auto"></audio>
       </a-assets>
   
       <!-- Lumières -->
       <a-light type="ambient" color="#8888ff" intensity="0.6"></a-light>
-      <a-light
-        type="directional"
-        color="#4444ff"
-        intensity="0.3"
-        position="0 10 5"
-      ></a-light>
+      <a-light type="directional" color="#4444ff" intensity="0.3" position="0 10 5"></a-light>
   
       <!-- Train -->
       <a-entity
@@ -39,8 +35,8 @@
       >
       </a-entity>
   
-      <!-- Horloge -->
-      <a-entity gltf-model="#Clock" scale="80 80 80" position="0 1 0"> </a-entity>
+      <!-- Diorama -->
+      <a-entity gltf-model="#Diorama" scale="80 80 80" position="-4.4 15.9 -1" animation-mixer="clip:Take 001"> </a-entity>
   
       <!-- Trou noir -->
       <a-entity
@@ -117,8 +113,14 @@
       <a-entity gltf-model="#island" scale="10 10 10" position="0 9 0"></a-entity>
   
       <!-- Caméra -->
-      <a-entity id="rig" movement-controls position="0 17 0" hoverboard-rotation>
-        <a-entity id="hoverboard" gltf-model="#HoverBoard" target="rig" scale="0.5 0.5 0.5" position="0 0 0"></a-entity>
+      <a-entity id="rig" movement-controls position="0 16 16" hoverboard-rotation>
+        <a-entity
+          id="hoverboard"
+          gltf-model="#HoverBoard"
+          target="rig"
+          scale="0.5 0.5 0.5"
+          position="0 0 0"
+        ></a-entity>
         <a-entity
           camera
           position="0 1.6 0"
@@ -144,16 +146,18 @@
       <a-sky color="#000044"></a-sky>
     </a-scene>
     <script>
-      AFRAME.registerComponent('hoverboard-rotation', {
+      AFRAME.registerComponent("hoverboard-rotation", {
         init: function () {
-          this.cameraEl = this.el.querySelector('[camera]');
-          this.hoverboardEl = this.el.querySelector('#hoverboard');
+          this.cameraEl = this.el.sceneEl.querySelector("[camera]");
+          this.hoverboardEl = this.el.querySelector("#hoverboard");
         },
   
         tick: function () {
-          const cameraRotation = this.cameraEl.object3D.rotation.y;
-          this.hoverboardEl.object3D.rotation.y = cameraRotation;
-        }
+          if (this.cameraEl && this.hoverboardEl) {
+            const cameraRotation = this.cameraEl.object3D.rotation.y;
+            this.hoverboardEl.object3D.rotation.y = cameraRotation;
+          }
+        },
       });
   
       AFRAME.registerComponent("circular-motion", {
@@ -172,7 +176,7 @@
           const x = this.data.radius * Math.cos(angle);
           const z = this.data.radius * Math.sin(angle);
   
-          const rotationY = (-angle * 180) / Math.PI + 90 + 180;
+          const rotationY = THREE.MathUtils.radToDeg(-angle) + 90 + 180;
   
           this.el.setAttribute("position", { x, y: 25, z });
           this.el.setAttribute("rotation", { x: 0, y: rotationY, z: 0 });
@@ -181,7 +185,7 @@
   
       document.addEventListener("click", function () {
         const audio = document.querySelector("#audio");
-        if (audio.paused) {
+        if (audio && audio.paused) {
           audio.play();
         }
       });
