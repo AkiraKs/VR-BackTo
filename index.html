@@ -1,193 +1,160 @@
 <head>
-    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
-    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-audioanalyser-component@3.0.1/dist/aframe-audioanalyser-component.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <a-assets>
-        <a-asset-item id="island" src="./img/ground/Ile.glb"></a-asset-item>
-        <a-asset-item id="Black" src="./img/Sky/BH.glb"></a-asset-item>
-        <a-asset-item id="Spaceship" src="./img/Sky/Spaceship.glb"></a-asset-item>
-        <a-asset-item id="Train" src="./img/ground/Train.glb"></a-asset-item>
-        <a-asset-item id="Bone" src="./img/Sky/Bone.glb"></a-asset-item>
-        <a-asset-item id="LargeBone" src="./img/Sky/LargeBone.glb"></a-asset-item>
-        <a-asset-item id="Table" src="./img/Sky/Table.glb"></a-asset-item>
-        <a-asset-item id="Window" src="./img/Sky/Window.glb"></a-asset-item>
-        <a-asset-item id="HoverBoard" src="./img/Character/HoverBoard.glb"></a-asset-item>
-        <a-asset-item id="Diorama" src="./img/ground/Diorama.glb"></a-asset-item>
-  
-        <audio id="audio" src="./img/audio/Theme.mp3" preload="auto"></audio>
-      </a-assets>
-  
-      <!-- Lumières -->
-      <a-light type="ambient" color="#8888ff" intensity="0.6"></a-light>
-      <a-light type="directional" color="#4444ff" intensity="0.3" position="0 10 5"></a-light>
-  
-      <!-- Train -->
-      <a-entity
-        gltf-model="#Train"
-        scale="1.5 1.5 1.5"
-        circular-motion="radius: 10; speed: 25000"
-      >
-      </a-entity>
-  
-      <!-- Diorama -->
-      <a-entity gltf-model="#Diorama" scale="80 80 80" position="-4.4 15.9 -1" animation-mixer="clip:Take 001"> </a-entity>
-  
-      <!-- Trou noir -->
-      <a-entity
-        gltf-model="#Black"
-        scale="0.8 0.8 0.8"
-        position="5 30 50"
-        rotation="0 90 0"
-        animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
-      ></a-entity>
-  
-      <!-- élement temporel dans le ciel -->
-      <a-entity
-        gltf-model="#Bone"
-        scale="5 5 5"
-        position="-15 50 10"
-        rotation="0 0 0"
-      ></a-entity>
-      <a-entity
-        gltf-model="#LargeBone"
-        scale="3 3 3"
-        position="20 55 -15"
-        rotation="0 0 0"
-      ></a-entity>
-      <a-entity
-        gltf-model="#Table"
-        scale="3 3 3"
-        position="0 60 25"
-        rotation="0 0 0"
-      ></a-entity>
-      <a-entity
-        gltf-model="#Window"
-        scale="4 4 4"
-        position="-30 48 -20"
-        rotation="0 0 0"
-      ></a-entity>
-  
-      <!-- Vaisseaux spatiaux -->
-      <a-entity
-        gltf-model="#Spaceship"
-        scale="0.8 0.8 0.8"
-        position="-10 35 -20"
-        animation="property: position; dir: alternate; dur: 4000; loop: true; to: -10 37 -20"
-      ></a-entity>
-  
-      <a-entity
-        gltf-model="#Spaceship"
-        scale="0.8 0.8 0.8"
-        position="15 40 10"
-        animation="property: position; dir: alternate; dur: 4500; loop: true; to: 15 42 10"
-      ></a-entity>
-  
-      <a-entity
-        gltf-model="#Spaceship"
-        scale="0.8 0.8 0.8"
-        position="20 45 -15"
-        animation="property: position; dir: alternate; dur: 5000; loop: true; to: 20 47 -15"
-      ></a-entity>
-  
-      <a-entity
-        gltf-model="#Spaceship"
-        scale="0.8 0.8 0.8"
-        position="-25 50 20"
-        animation="property: position; dir: alternate; dur: 5500; loop: true; to: -25 52 20"
-      ></a-entity>
-  
-      <a-entity
-        gltf-model="#Spaceship"
-        scale="0.8 0.8 0.8"
-        position="30 55 -25"
-        animation="property: position; dir: alternate; dur: 6000; loop: true; to: 30 57 -25"
-      ></a-entity>
-  
-      <!-- Sol -->
-      <a-entity gltf-model="#island" scale="10 10 10" position="0 9 0"></a-entity>
-  
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,user-scalable=no,maximum-scale=1" />
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-audioanalyser-component@3.0.1/dist/aframe-audioanalyser-component.min.js"></script>
+  <style>
+    #collectible-counter {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: white;
+      font-size: 24px;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
+      padding: 8px 12px; 
+      border-radius: 5px; 
+      z-index: 100;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+
+<body>
+  <a-scene>
+    <a-assets>
+      <a-asset-item id="island" src="./img/ground/Ile.glb"></a-asset-item>
+      <a-asset-item id="Black" src="./img/Sky/BH.glb"></a-asset-item>
+      <a-asset-item id="Spaceship" src="./img/Sky/Spaceship.glb"></a-asset-item>
+      <a-asset-item id="Train" src="./img/ground/Train.glb"></a-asset-item>
+      <a-asset-item id="Bone" src="./img/Sky/Bone.glb"></a-asset-item>
+      <a-asset-item id="LargeBone" src="./img/Sky/LargeBone.glb"></a-asset-item>
+      <a-asset-item id="Table" src="./img/Sky/Table.glb"></a-asset-item>
+      <a-asset-item id="Window" src="./img/Sky/Window.glb"></a-asset-item>
+      <a-asset-item id="HoverBoard" src="./img/Character/HoverBoard.glb"></a-asset-item>
+      <a-asset-item id="Diorama" src="./img/ground/Diorama.glb"></a-asset-item>
+      <a-asset-item id="Flux" src="./img/Sky/Flux.glb"></a-asset-item>
+      <a-assets-item id="Saloon" src="./img/ground/Saloon.glb"></a-assets-item>
+      <a-assets-item id="Charette" src="./img/ground/Charette.glb"></a-assets-item>
+      <audio id="audio" src="./img/audio/Theme.mp3" preload="auto"></audio>
+    </a-assets>
+    <div id="collectible-counter">0/4</div>
+    <a-entity class="collectible clickable" gltf-model="#Flux" scale="1 1 1" position="0 18 0"></a-entity>
+
+    <!-- Lumières -->
+    <a-light type="ambient" color="#8888ff" intensity="0.6"></a-light>
+    <a-light type="directional" color="#4444ff" intensity="0.3" position="0 10 5"></a-light>
+    <!-- Train -->
+    <a-entity gltf-model="#Train" scale="1.5 1.5 1.5" circular-motion="radius: 20; speed: 20000"></a-entity>
+    <!-- Diorama -->
+    <a-entity gltf-model="#Diorama" scale="80 80 80" position="-4.4 15.9 -1" animation-mixer="clip:Take 001"></a-entity>
+    <!-- Saloon -->
+    <a-entity gltf-model="#Saloon" scale="2 2 2" position="17 17 -9" rotation="0 90 0"></a-entity>
+    <!-- Charette -->
+    <a-entity gltf-model="#Charette" position="13 16.5 3" rotation="0 90 0"></a-entity>
+    <!-- Trou noir -->
+    <a-entity gltf-model="#Black" scale="0.8 0.8 0.8" position="5 30 50" rotation="0 90 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"></a-entity>
+    <!-- élement dans le ciel -->
+    <a-entity gltf-model="#Bone" scale="5 5 5" position="-15 50 10" rotation="0 0 0"></a-entity>
+    <a-entity gltf-model="#LargeBone" scale="3 3 3" position="20 55 -15" rotation="0 0 0"></a-entity>
+    <a-entity gltf-model="#Table" scale="3 3 3" position="0 60 25" rotation="0 0 0"></a-entity>
+    <a-entity gltf-model="#Window" scale="4 4 4" position="-30 48 -20" rotation="0 0 0"></a-entity>
+    <a-entity gltf-model="#Flux" scale="1.5 1.5 1.5" position="10 20 10" rotation="0 120 0"></a-entity>
+    <a-entity gltf-model="#Flux" scale="1 1 1" position="0 18 0" rotation="0 120 0" class="collectible"></a-entity>
+    <!-- Vaisseaux spatiaux -->
+    <a-entity gltf-model="#Spaceship" scale="0.8 0.8 0.8" position="-10 35 -20" animation="property: position; dir: alternate; dur: 4000; loop: true; to: -10 37 -20"></a-entity>
+    <a-entity gltf-model="#Spaceship" scale="0.8 0.8 0.8" position="15 40 10" animation="property: position; dir: alternate; dur: 4500; loop: true; to: 15 42 10"></a-entity>
+    <a-entity gltf-model="#Spaceship" scale="0.8 0.8 0.8" position="20 45 -15" animation="property: position; dir: alternate; dur: 5000; loop: true; to: 20 47 -15"></a-entity>
+    <a-entity gltf-model="#Spaceship" scale="0.8 0.8 0.8" position="-25 50 20" animation="property: position; dir: alternate; dur: 5500; loop: true; to: -25 52 20"></a-entity>
+    <a-entity gltf-model="#Spaceship" scale="0.8 0.8 0.8" position="30 55 -25" animation="property: position; dir: alternate; dur: 6000; loop: true; to: 30 57 -25"></a-entity>
+    <!-- Sol -->
+    <a-entity gltf-model="#island" scale="10 10 10" position="0 9 0"></a-entity>
+    <a-entity gltf-model="#island" scale="4 4 4" position="17 13.4 -9"></a-entity>
+    <!-- texte -->
+    <a-entity id="introText" 
+    position="0 18 10" 
+    animation="property: opacity; to: 1; startEvents: fade; dur: 3000;" 
+    animation__scale="property: scale; to: 1.2 1.2 1.2; startEvents: fade; dur: 3000;" 
+    animation__position="property: position; to: 0 19 10; dur: 3000; easing: easeInOutQuad; startEvents: fade;">
+    
+    <!-- Texte principal -->
+    <a-text value="Après une faille temporelle, toi et toi seul as pour mission de retrouver les 4 reliques éparpillées à travers le temps et l'espace. Chaque relique détient un pouvoir unique, essentiel pour réparer l'espace-temps et restaurer l'équilibre de notre réalité. Prépare-toi à explorer des mondes inconnus et à relever des défis inattendus."color="#ffffff" width="10" align="center" wrapCount="35" shader="flat" opacity="0.9"position="0 0 0"animation="property: opacity; to: 1; dur: 3000; startEvents: fade;"></a-text>
+    <!-- Lueur d'ambiance -->
+    <a-entity light="type: point; color: #44ffff; intensity: 1; distance: 15;" position="0 0 0"
+      animation="property: light.intensity; to: 0; dur: 3000; startEvents: fade;"></a-entity>
+  </a-entity>
       <!-- Caméra -->
-      <a-entity id="rig" movement-controls position="0 16.5 16" hoverboard-rotation>
-        <a-entity
-          id="hoverboard"
-          gltf-model="#HoverBoard"
-          target="rig"
-          scale="0.5 0.5 0.5"
-          position="0 0 0"
-        ></a-entity>
-        <a-entity
-          camera
-          position="0 1.6 0"
-          look-controls="pointerLockEnabled: true"
-          cursor="rayOrigin: mouse"
-        ></a-entity>
-        <a-entity
-          oculus-touch-controls="hand: left"
-          laser-controls="hand: left"
-          raycaster="objects: .clickable; far: 10; showLine: true"
-        ></a-entity>
-        <a-entity
-          oculus-touch-controls="hand: right"
-          laser-controls="hand: right"
-          raycaster="objects: .clickable; far: 10; showLine: true"
-        ></a-entity>
+    <a-entity id="rig" movement-controls position="0 16.5 16" hoverboard-rotation>
+      <!-- Hoverboard -->
+      <a-entity id="hoverboard" gltf-model="#HoverBoard" target="rig" scale="0.5 0.5 0.5" position="0 0 0" hoverboard-rotation></a-entity>
+      <!-- Caméra -->
+      <a-entity 
+        camera 
+        position="0 1.6 0" 
+        look-controls="pointerLockEnabled: true" 
+        cursor="rayOrigin: mouse">
       </a-entity>
-  
-      <!-- Environnement -->
-      <a-entity
-        environment="preset: starry; dressingAmount: 500; groundColor: #000033; skyColor: #000044"
-      ></a-entity>
-      <a-sky color="#000044"></a-sky>
-    </a-scene>
-    <script>
-      AFRAME.registerComponent("hoverboard-rotation", {
-        init: function () {
-          this.cameraEl = this.el.sceneEl.querySelector("[camera]");
-          this.hoverboardEl = this.el.querySelector("#hoverboard");
-        },
-  
-        tick: function () {
-          if (this.cameraEl && this.hoverboardEl) {
-            const cameraRotation = this.cameraEl.object3D.rotation.y;
-            this.hoverboardEl.object3D.rotation.y = cameraRotation;
-          }
-        },
-      });
-  
-      AFRAME.registerComponent("circular-motion", {
-        schema: {
-          radius: { type: "number", default: 15 },
-          speed: { type: "number", default: 20000 },
-        },
-  
-        init: function () {
-          this.angle = 0;
-        },
-  
-        tick: function (time, deltaTime) {
-          const elapsed = time % this.data.speed;
-          const angle = (elapsed / this.data.speed) * 2 * Math.PI;
-          const x = this.data.radius * Math.cos(angle);
-          const z = this.data.radius * Math.sin(angle);
-  
-          const rotationY = THREE.MathUtils.radToDeg(-angle) + 90 + 180;
-  
-          this.el.setAttribute("position", { x, y: 25, z });
-          this.el.setAttribute("rotation", { x: 0, y: rotationY, z: 0 });
-        },
-      });
-  
-      document.addEventListener("click", function () {
-        const audio = document.querySelector("#audio");
-        if (audio && audio.paused) {
-          audio.play();
+      <!-- Raycaster pour les collectibles -->
+      <a-entity 
+        raycaster="objects: .clickable; far: 10" 
+        cursor="fuse: false">
+      </a-entity>
+    </a-entity>
+    <!-- Environnement -->
+    <a-entity environment="preset: starry; dressingAmount: 500; groundColor: #000033; skyColor: #000044"></a-entity>
+    <a-sky color="#000044"></a-sky>
+  </a-scene>
+  <script>
+    AFRAME.registerComponent("hoverboard-rotation", {
+      init: function () {
+        this.cameraEl = this.el.querySelector("[camera]");
+        this.hoverboardEl = this.el.querySelector("#hoverboard");
+      },
+      tick: function () {
+        if (this.cameraEl && this.hoverboardEl) {
+          const cameraRotation = this.cameraEl.object3D.rotation.y;
+          this.hoverboardEl.object3D.rotation.y = cameraRotation;
         }
+      },
+    });
+
+    // Système de collectibles
+    AFRAME.registerComponent("collectible", {
+      init: function () {
+        this.el.addEventListener("click", () => {
+          const counterEl = document.querySelector("#collectible-counter");
+          const currentCount = parseInt(counterEl.textContent.split("/")[0]);
+          counterEl.textContent = `${currentCount + 1}/4`;
+
+          // Supprimer le collectible
+          this.el.parentNode.removeChild(this.el);
+        });
+      },
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const collectibles = document.querySelectorAll(".collectible");
+      collectibles.forEach((collectible) => {
+        collectible.setAttribute("collectible", "");
       });
-    </script>
-  </body>
+
+      const introText = document.querySelector("#introText");
+      setTimeout(() => {
+        introText.emit("fade");
+      }, 1000); // 1 seconde avant de commencer l'animation de disparition
+    });
+
+    // Lecture audio au clic
+    document.addEventListener("click", function () {
+      const audio = document.querySelector("#audio");
+      if (audio && audio.paused) {
+        audio.play();
+      }
+    });
+  </script>
+</body>
