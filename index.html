@@ -32,14 +32,12 @@
     </a-assets>
 
     <!-- Collectibles -->
-    <a-entity class="collectible clickable" gltf-model="#Sablier" position="0 17 12" scale="0.1 0.1 0.1" animation="property: position; to: 0 17.3 12; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
-    <a-entity class="collectible clickable" gltf-model="#Sablier" position="5 17 -10.5" scale="0.1 0.1 0.1" animation="property: position; to: 5 17.3 -10.5; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
+    <a-entity class="collectible clickable" gltf-model="#Sablier" position="0 17 12" scale="0.1 0.1 0.1" animation="property: position; to: 0 17.3 12; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine" onclick="showMessage('Vous avez collecté un Sablier!')"></a-entity>
+    <a-entity class="collectible clickable" gltf-model="#Sablier" position="5 17 -10.5" scale="0.1 0.1 0.1" animation="property: position; to: 5 17.3 -10.5; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine" onclick="showMessage('Vous avez collecté un Sablier!')"></a-entity>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="-15.2 17 -10" scale="0.1 0.1 0.1" animation="property: position; to: -15.2 17.3 -10; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="15 17 -10" scale="0.1 0.1 0.1" animation="property: position; to: 15 17.3 -10; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="0 17 -20" scale="0.1 0.1 0.1" animation="property: position; to: 0 17.3 -20; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
-    <a-entity class="collectible clickable" gltf-model="#Sablier" position="5 17 15" scale="0.1 0.1 0.1" animation="property: position; to: 5 17.3 15; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
-
-
+    <a-entity class="collectible clickable" gltf-model="#Sablier" position="12 17 12" scale="0.1 0.1 0.1" animation="property: position; to: 12 17.3 12; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
 
     <!-- Lumières -->
     <a-light type="ambient" color="#8888ff" intensity="0.6"></a-light>
@@ -81,6 +79,7 @@
   </a-entity>
       <!-- Caméra -->
     <a-entity id="rig" movement-controls position="0 16.5 16" hoverboard-rotation>
+      
       <!-- Hoverboard -->
       <a-entity id="hoverboard" gltf-model="#HoverBoard" target="rig" scale="0.5 0.5 0.5" position="0 0 0" hoverboard-rotation></a-entity>
       <!-- Laser -->
@@ -88,6 +87,7 @@
     <a-entity laser-controls="hand: right" raycaster="objects: .clickable; far: 20; showLine: true" position="0.5 1.5 -0.5"></a-entity>
       <!-- Raycaster pour les collectibles -->
       <a-entity camera position="0 1.6 0" look-controls="pointerLockEnabled: true" cursor="rayOrigin: mouse">
+        <a-cursor></a-cursor>
         <a-text id="collectible-counter" value="0/6" position="-5 3.5 -5"></a-text>
       </a-entity>
      <a-entity raycaster="objects: .clickable; far: 10" cursor="fuse: false"> </a-entity>
@@ -133,7 +133,6 @@
     }
 });
 
-
     AFRAME.registerComponent("collectible", {
       init: function () {
         this.el.addEventListener("click", () => {
@@ -166,5 +165,9 @@
         audio.play();
       }
     });
+
+    function showMessage(message) {
+      alert(message);
+    }
   </script>
 </body>
