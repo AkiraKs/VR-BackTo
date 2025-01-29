@@ -8,21 +8,6 @@
   <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
   <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
   <script src="https://unpkg.com/aframe-audioanalyser-component@3.0.1/dist/aframe-audioanalyser-component.min.js"></script>
-  <style>
-    #collectible-counter {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      color: white;
-      font-size: 24px;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5));
-      padding: 8px 12px; 
-      border-radius: 5px; 
-      z-index: 100;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    }
-  </style>
 </head>
 
 <body>
@@ -47,9 +32,12 @@
     </a-assets>
 
     <!-- Collectibles -->
-    <div id="collectible-counter">0/5</div>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="0 17 12" scale="0.1 0.1 0.1" animation="property: position; to: 0 17.3 12; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="5 17 -10.5" scale="0.1 0.1 0.1" animation="property: position; to: 5 17.3 -10.5; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
+    <a-entity class="collectible clickable" gltf-model="#Sablier" position="-15.2 17 -10" scale="0.1 0.1 0.1" animation="property: position; to: -15.2 17.3 -10; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
+    <a-entity class="collectible clickable" gltf-model="#Sablier" position="15 17 -10" scale="0.1 0.1 0.1" animation="property: position; to: 15 17.3 -10; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
+    <a-entity class="collectible clickable" gltf-model="#Sablier" position="0 17 -20" scale="0.1 0.1 0.1" animation="property: position; to: 0 17.3 -20; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
+    <a-entity class="collectible clickable" gltf-model="#Sablier" position="5 17 15" scale="0.1 0.1 0.1" animation="property: position; to: 5 17.3 15; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
 
 
 
@@ -85,6 +73,8 @@
     <a-entity id="introText" position="0 18 10" animation="property: opacity; to: 1; startEvents: fade; dur: 3000;" animation__scale="property: scale; to: 1.2 1.2 1.2; startEvents: fade; dur: 3000;" animation__position="property: position; to: 0 19 10; dur: 3000; easing: easeInOutQuad; startEvents: fade;">
     <!-- Texte principal -->
     <a-text font="./img/custom-msdf.json" font-image="./img/custom.png" value="Après une faille temporelle, toi et toi seul as pour mission de retrouver les 4 reliques éparpillées à travers le temps et l'espace. Chaque relique détient un pouvoir unique, essentiel pour réparer l'espace-temps et restaurer l'équilibre de notre réalité."color="#ffffff" width="10" align="center" wrapCount="35" shader="flat" opacity="0.9"position="0 0 0"animation="property: opacity; to: 1; dur: 3000; startEvents: fade;"></a-text>
+    <a-entity id="triggerText" position="0 15 10" animation="property: opacity; to: 1; startEvents: fade; dur: 3000;">
+  </a-entity>
     <!-- Lueur d'ambiance -->
     <a-entity light="type: point; color: #44ffff; intensity: 1; distance: 15;" position="0 0 0"
       animation="property: light.intensity; to: 0; dur: 3000; startEvents: fade;"></a-entity>
@@ -98,8 +88,10 @@
     <a-entity laser-controls="hand: right" raycaster="objects: .clickable; far: 20; showLine: true" position="0.5 1.5 -0.5"></a-entity>
       <!-- Raycaster pour les collectibles -->
       <a-entity camera position="0 1.6 0" look-controls="pointerLockEnabled: true" cursor="rayOrigin: mouse">
+        <a-text id="collectible-counter" value="0/6" position="-5 3.5 -5"></a-text>
       </a-entity>
      <a-entity raycaster="objects: .clickable; far: 10" cursor="fuse: false"> </a-entity>
+  
     </a-entity>
     <!-- Environnement -->
     <a-entity environment="preset: starry; dressingAmount: 500; groundColor: #000033; skyColor: #000044"></a-entity>
@@ -118,16 +110,40 @@
         }
       },
     });
+    AFRAME.registerComponent('circular-motion', {
+    schema: {
+        radius: {type: 'number', default: 20},
+        speed: {type: 'number', default: 20000},
+        height: {type: 'number', default: 28} 
+    },
+    init: function () {
+        this.angle = 0;
+    },
+    tick: function (time, timeDelta) {
+  
+        this.angle += (timeDelta / this.data.speed) * 360;
+        let radian = this.angle * (Math.PI / 180);
+
+        let x = this.data.radius * Math.cos(radian);
+        let z = this.data.radius * Math.sin(radian);
+        let rotationY = -this.angle + -90; 
+
+        this.el.setAttribute('position', `${x} ${this.data.height} ${z}`);
+        this.el.setAttribute('rotation', `0 ${rotationY} 0`);
+    }
+});
+
 
     AFRAME.registerComponent("collectible", {
       init: function () {
         this.el.addEventListener("click", () => {
           const counterEl = document.querySelector("#collectible-counter");
-          const currentCount = parseInt(counterEl.textContent.split("/")[0]);
-          counterEl.textContent = `${currentCount + 1}/5`;
-
+          const currentCount = parseInt(counterEl.getAttribute('value').split("/")[0]);
           
-          this.el.parentNode.removeChild(this.el);
+          if (!isNaN(currentCount) && currentCount < 6) {
+            counterEl.setAttribute('value', `${currentCount + 1}/6`);
+            this.el.parentNode.removeChild(this.el);
+          }
         });
       },
     });
