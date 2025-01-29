@@ -35,7 +35,7 @@
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="0 17 12" scale="0.1 0.1 0.1" animation="property: position; to: 0 17.3 12; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="5 17 -10.5" scale="0.1 0.1 0.1" animation="property: position; to: 5 17.3 -10.5; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="-15.2 17 -10" scale="0.1 0.1 0.1" animation="property: position; to: -15.2 17.3 -10; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
-    <a-entity class="collectible clickable" gltf-model="#Sablier" position="15 17 -10" scale="0.1 0.1 0.1" animation="property: position; to: 15 17.3 -10; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
+    <a-entity class="collectible clickable" gltf-model="#Sablier" position="15 17.5 -10" scale="0.1 0.1 0.1" animation="property: position; to: 15 18 -10; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="0 17 -20" scale="0.1 0.1 0.1" animation="property: position; to: 0 17.3 -20; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="12 17 12" scale="0.1 0.1 0.1" animation="property: position; to: 12 17.3 12; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
 
@@ -96,6 +96,9 @@
     <!-- Environnement -->
     <a-entity environment="preset: starry; dressingAmount: 500; groundColor: #000033; skyColor: #000044"></a-entity>
     <a-sky color="#000044"></a-sky>
+    <a-entity id="winMessage" position="0 20 10" visible="false">
+      <a-text value="Bravo, tu as gagné !" color="#00ff00" width="6" align="center"></a-text>
+    </a-entity>
   </a-scene>
   <script>
     AFRAME.registerComponent("hoverboard-rotation", {
@@ -143,6 +146,12 @@
           if (!isNaN(currentCount) && currentCount < 6) {
             counterEl.setAttribute('value', `${currentCount + 1}/6`);
             this.el.parentNode.removeChild(this.el);
+            
+            // Vérifier si tous les collectibles ont été ramassés
+            if (currentCount + 1 === 6) {
+              const winMessage = document.querySelector("#winMessage");
+              winMessage.setAttribute("visible", "true");
+            }
           }
         });
       },
