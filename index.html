@@ -32,8 +32,8 @@
     </a-assets>
 
     <!-- Collectibles -->
-    <a-entity class="collectible clickable" gltf-model="#Sablier" position="0 17 12" scale="0.1 0.1 0.1" animation="property: position; to: 0 17.3 12; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine" event-set__click="event: click; property: scale; to: 1.2 1.2 1.2; dur: 100" onclick="showMessage('Vous avez collecté un Sablier!')"></a-entity>
-    <a-entity class="collectible clickable" gltf-model="#Sablier" position="5 17 -10.5" scale="0.1 0.1 0.1" animation="property: position; to: 5 17.3 -10.5; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine" event-set__click="event: click; property: scale; to: 1.2 1.2 1.2; dur: 100" onclick="showMessage('Vous avez collecté un Sablier!')"></a-entity>
+    <a-entity class="collectible clickable" gltf-model="#Sablier" position="0 17 12" scale="0.1 0.1 0.1" animation="property: position; to: 0 17.3 12; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
+    <a-entity class="collectible clickable" gltf-model="#Sablier" position="5 17 -10.5" scale="0.1 0.1 0.1" animation="property: position; to: 5 17.3 -10.5; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="-15.2 17 -10" scale="0.1 0.1 0.1" animation="property: position; to: -15.2 17.3 -10; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="15 17 -10" scale="0.1 0.1 0.1" animation="property: position; to: 15 17.3 -10; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
     <a-entity class="collectible clickable" gltf-model="#Sablier" position="0 17 -20" scale="0.1 0.1 0.1" animation="property: position; to: 0 17.3 -20; dir: alternate; dur: 1000; loop: true; easing: easeInOutSine"></a-entity>
@@ -88,7 +88,7 @@
       <!-- Raycaster pour les collectibles -->
       <a-entity camera position="0 1.6 0" look-controls="pointerLockEnabled: true" cursor="rayOrigin: mouse">
         <a-cursor></a-cursor>
-        <a-text id="collectible-counter" value="0/6" position="-5 3.5 -5"></a-text>
+        <a-text id="collectible-counter" value="0/6" position="-3 4 -10"></a-text>
       </a-entity>
      <a-entity raycaster="objects: .clickable; far: 10" cursor="fuse: false"> </a-entity>
   
@@ -133,6 +133,7 @@
     }
 });
 
+
     AFRAME.registerComponent("collectible", {
       init: function () {
         this.el.addEventListener("click", () => {
@@ -165,9 +166,5 @@
         audio.play();
       }
     });
-
-    function showMessage(message) {
-      alert(message);
-    }
   </script>
 </body>
