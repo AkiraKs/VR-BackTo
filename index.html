@@ -27,6 +27,8 @@
       <a-assets-item id="Saloon" src="./img/ground/Saloon.glb"></a-assets-item>
       <a-assets-item id="Charette" src="./img/ground/Charette.glb"></a-assets-item>
       <a-assets-item id="Sablier" src="./img/collectible/Sablier.glb"></a-assets-item>
+      <a-assets-item id="desert" src="./img/ground/Desert.glb"></a-assets-item>
+      <a-assets-item id="fence" src="./img/ground/Fence.glb"></a-assets-item>
 
       <audio id="audio" src="./img/audio/Theme.mp3" preload="auto"></audio>
     </a-assets>
@@ -48,6 +50,12 @@
     <a-entity gltf-model="#Diorama" scale="80 80 80" position="-4.4 15.9 -1" animation-mixer="clip:Take 001"></a-entity>
     <!-- Saloon -->
     <a-entity gltf-model="#Saloon" scale="2 2 2" position="17 17 -9" rotation="0 90 0"></a-entity>
+    <!-- Fence -->
+    <a-entity gltf-model="#fence" scale="1 1 1" position="13 16.5 16" rotation="0 -140 0"></a-entity>
+    <a-entity gltf-model="#fence" scale="1 1 1" position="15.5 16.5 13.6" rotation="0 -140 0"></a-entity>
+    <a-entity gltf-model="#fence" scale="1 1 1" position="18 16.5 11" rotation="0 -120 0"></a-entity>
+    <!-- Desert -->
+    <a-entity gltf-model="#desert" scale="0.06 0.06 0.06" position="15 10.5 12" rotation="0 -120 0"></a-entity>
     <!-- Charette -->
     <a-entity gltf-model="#Charette" position="13 16.5 3" rotation="0 90 0"></a-entity>
     <!-- Trou noir -->
@@ -57,7 +65,7 @@
     <a-entity gltf-model="#LargeBone" scale="3 3 3" position="20 55 -15" rotation="0 0 0"></a-entity>
     <a-entity gltf-model="#Table" scale="3 3 3" position="0 60 25" rotation="0 0 0"></a-entity>
     <a-entity gltf-model="#Window" scale="4 4 4" position="-30 48 -20" rotation="0 0 0"></a-entity>
-    <a-entity gltf-model="#Flux" scale="1.5 1.5 1.5" position="10 20 10" rotation="0 120 0"></a-entity>
+    <a-entity gltf-model="#Flux" scale="1.5 1.5 1.5" position="14 20 14" rotation="0 140 0"></a-entity>
     <!-- Vaisseaux spatiaux -->
     <a-entity gltf-model="#Spaceship" scale="0.8 0.8 0.8" position="-10 35 -20" animation="property: position; dir: alternate; dur: 4000; loop: true; to: -10 37 -20"></a-entity>
     <a-entity gltf-model="#Spaceship" scale="0.8 0.8 0.8" position="15 40 10" animation="property: position; dir: alternate; dur: 4500; loop: true; to: 15 42 10"></a-entity>
@@ -88,26 +96,8 @@
       <!-- Raycaster pour les collectibles -->
       <a-entity camera position="0 1.6 0" look-controls="pointerLockEnabled: true" cursor="rayOrigin: mouse">
         <a-cursor></a-cursor>
-        <a-text id="collectible-counter" 
-        value="0/6" 
-        position="-1 2 -8" 
-        scale="2 2 2" 
-        color="#FFD700" 
-        align="center"
-        letter-spacing="5">
-          </a-text>
-
-          <a-text id="winMessage" 
-        visible="false" 
-        position="-2 1.2 -8" 
-        value="Bravo, tu as win !" 
-        scale="2.5 2.5 2.5" 
-        color="#32CD32" 
-        align="center"
-        letter-spacing="3">
-          </a-text>
-
-
+        <a-text id="collectible-counter" value="0/6" position="-1 2 -8" scale="2 2 2" color="#FFD700" align="center"letter-spacing="5"></a-text>
+        <a-text id="winMessage" visible="false" position="-2 1.2 -7" value="Bravo, tu as gagne !" scale="2.5 2.5 2.5" color="#32CD32" align="center"letter-spacing="3"></a-text>
       </a-entity>
      <a-entity raycaster="objects: .clickable; far: 10" cursor="fuse: false"> </a-entity>
   
