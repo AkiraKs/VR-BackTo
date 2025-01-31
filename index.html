@@ -88,7 +88,8 @@
       <!-- Raycaster pour les collectibles -->
       <a-entity camera position="0 1.6 0" look-controls="pointerLockEnabled: true" cursor="rayOrigin: mouse">
         <a-cursor></a-cursor>
-        <a-text id="collectible-counter" value="0/6" position="-1 2 -8" scale="2 2 2"></a-text>
+        <a-text id="collectible-counter" value="0/6" position="-1 2 -8" scale="2 2 2"></a-text>   
+        <a-text id="winMessage" visible="false" position="0 2 -3" value="Bravo, tu as win !" scale="2 2 2"></a-text>
       </a-entity>
      <a-entity raycaster="objects: .clickable; far: 10" cursor="fuse: false"> </a-entity>
   
@@ -96,9 +97,6 @@
     <!-- Environnement -->
     <a-entity environment="preset: starry; dressingAmount: 500; groundColor: #000033; skyColor: #000044"></a-entity>
     <a-sky color="#000044"></a-sky>
-    <a-entity id="winMessage" position="0 20 10" visible="false">
-      <a-text value="Bravo, tu as gagné !" color="#00ff00" width="6" align="center"></a-text>
-    </a-entity>
   </a-scene>
   <script>
     AFRAME.registerComponent("hoverboard-rotation", {
@@ -137,25 +135,25 @@
 });
 
 
-    AFRAME.registerComponent("collectible", {
-      init: function () {
-        this.el.addEventListener("click", () => {
-          const counterEl = document.querySelector("#collectible-counter");
-          const currentCount = parseInt(counterEl.getAttribute('value').split("/")[0]);
-          
-          if (!isNaN(currentCount) && currentCount < 6) {
-            counterEl.setAttribute('value', `${currentCount + 1}/6`);
-            this.el.parentNode.removeChild(this.el);
-            
-            // Vérifier si tous les collectibles ont été ramassés
-            if (currentCount + 1 === 6) {
-              const winMessage = document.querySelector("#winMessage");
-              winMessage.setAttribute("visible", "true");
-            }
-          }
-        });
-      },
+AFRAME.registerComponent("collectible", {
+  init: function () {
+    this.el.addEventListener("click", () => {
+      const counterEl = document.querySelector("#collectible-counter");
+      const currentCount = parseInt(counterEl.getAttribute('value').split("/")[0]);
+      
+      if (!isNaN(currentCount) && currentCount < 6) {
+        counterEl.setAttribute('value', `${currentCount + 1}/6`);
+        this.el.parentNode.removeChild(this.el);
+        
+        if (currentCount + 1 === 6) {
+          const winMessage = document.querySelector("#winMessage");
+          winMessage.setAttribute("visible", "true");
+          winMessage.setAttribute("animation", "property: position; to: 0 2 -3; dur: 1000; easing: easeInOutQuad;"); 
+        }
+      }
     });
+  },
+});
 
     document.addEventListener("DOMContentLoaded", () => {
       const collectibles = document.querySelectorAll(".collectible");
